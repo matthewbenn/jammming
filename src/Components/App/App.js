@@ -8,33 +8,44 @@ import Playlist from '../Playlist/Playlist';
 class App extends Component {
   constructor(props) {
     super(props);
-// Need to confirm syntax of Array of Objects
+
     this.state = {
 // SearchResults should be an Array of Objects
-      searchResults: [],
-        id:'',
-        album:'',
-        artist:'',
-        name:'',
+      searchResults: [
+        {
+          id:'',
+          album:'',
+          artist:'',
+          name:''
+        }
+      ],
+
         playlistName:'',
         // playlistTracks should be an Array of Objects
-        playlistTracks: [],
-          name:'',
-          artist:'',
-          album:'',
-          id:''
+        playlistTracks: [
+          {
+            name:'',
+            artist:'',
+            album:'',
+            id:''
+          }
+        ]
 
     };
 
     this.addTrack = this.addTrack.bind(this);
 
-  }
-
+}
   addTrack(track) {
     if (this.state.playlistTracks.find(savedTrack =>
     savedTrack.id === track.id)) {
       return this.state.playlistTracks;
     };
+  }
+
+  removeTrack(track) {
+    this.state.playlistTracks.filter(savedTrack => savedTrack.id === track.id))
+    }
   }
 
 
