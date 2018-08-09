@@ -43,10 +43,12 @@ class App extends Component {
     };
   }
 
+// CURRENT WORK
   removeTrack(track) {
-    this.state.playlistTracks.filter(savedTrack => savedTrack.id === track.id))
+    //this.state.playlistTracks.filter(savedTrack => savedTrack.id === track.id))
+
     }
-  }
+
 
 
   render() {
