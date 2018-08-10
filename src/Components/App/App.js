@@ -37,24 +37,20 @@ class App extends Component {
 }
 
   addTrack(track) {
-// UNFINISHED METHOD
-//Should this be using this.setState ?
-
-//      this.state.playlistTracks.push(track);
-//    };
+    if (this.state.playlistTracks.find(trackSave =>
+    trackSave.id === track.id)) {
+      return;
+    } else {
+      this.state.playlistTracks.push(track.id)
+    };
   }
 
-// CURRENT WORK
   removeTrack(track) {
-//// UNFINISHED METHOD
-//Should this be using this.setState ?
-
-//    if (track.id.find(track =>
-//    track.id === track.id)) {
-//      this.state.playlistTracks.pop(track);
-//    };
+    if (this.state.playlistTracks.find(trackRemove =>
+  trackRemove.id === track.id)) {
+  this.state.playlistTracks.pop(track.id);
+    };
   }
-
 
 
   render() {
@@ -64,11 +60,11 @@ class App extends Component {
         <div className="App">
         <SearchBar />
           <div className="App-playlist">
-          <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack()}/>
+          <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack}/>
             <Playlist
               playlistName={this.state.playlistName}
               playlistTracks={this.state.playlistTracks}
-              onRemove={this.removeTrack()} />
+              onRemove={this.removeTrack} />
           </div>
         </div>
       </div>
