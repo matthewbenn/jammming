@@ -20,11 +20,14 @@ renderAction() {
 }
 
 addTrack(track) {
+//Should this be using this.setState ?
   return <Playlist onAdd={this.props.track} />
 }
 
 removeTrack() {
 // Needs functionality
+//Should this be using this.setState ?
+
   return <Playlist onRemove={this.props.track} />
 }
 

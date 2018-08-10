@@ -38,6 +38,8 @@ class App extends Component {
 
   addTrack(track) {
 // UNFINISHED METHOD
+//Should this be using this.setState ?
+
 //      this.state.playlistTracks.push(track);
 //    };
   }
@@ -45,6 +47,8 @@ class App extends Component {
 // CURRENT WORK
   removeTrack(track) {
 //// UNFINISHED METHOD
+//Should this be using this.setState ?
+
 //    if (track.id.find(track =>
 //    track.id === track.id)) {
 //      this.state.playlistTracks.pop(track);
