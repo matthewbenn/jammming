@@ -13,22 +13,20 @@ constructor(props) {
 
 renderAction() {
   if (this.props.isRemoval) {
-    return <a className="Track-action"onClick={this.removeTrack()}>-</a>
+    return <a className="Track-action" onClick={this.removeTrack}>-</a>
   } else {
-    return <a className="Track-action" onClick={this.addTrack()}>+</a>
+    return <a className="Track-action" onClick={this.addTrack}>+</a>
   }
 }
 
 addTrack(track) {
 //Should this be using this.setState ?
-  return <Playlist onAdd={this.props.track} />
+  this.setState(this.props.onAdd)
 }
 
 removeTrack() {
-// Needs functionality
 //Should this be using this.setState ?
-
-  return <Playlist onRemove={this.props.track} />
+  this.setState(this.props.onRemove)
 }
 
   render() {
