@@ -1,6 +1,5 @@
 import React from 'react';
 import './Track.css';
-import Playlist from '../Playlist/Playlist'
 
 class Track extends React.Component {
 constructor(props) {
@@ -36,7 +35,7 @@ removeTrack() {
           <h3>{this.props.track.name}</h3>
           <p>{this.props.track.artist}</p>
         </div>
-        <a className="Track-action">{this.renderAction()}</a>
+        <a className="Track-action">{this.renderAction}</a>
       </div>
     );
   }
