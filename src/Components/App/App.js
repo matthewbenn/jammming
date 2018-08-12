@@ -35,9 +35,8 @@ class App extends Component {
             id:''
           }
         ]
-
-    };
-}
+      };
+    }
 
 // Checks to see if track already exists in playlistTracks, then adds if not.
   addTrack(track) {
