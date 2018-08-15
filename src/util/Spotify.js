@@ -6,7 +6,6 @@ var cors = require('cors');
 
 const authorizeUrl = `https://accounts.spotify.com/authorize?`;
 const responseUrl = window.location.href
-const expires_in = '';
 const endpoint = `${authorizeUrl}&${client_id}&${response_type}&${redirect_uri}&${state}&${scope}`
 
 // Data to be sent
@@ -21,6 +20,7 @@ const scope = 'user-read-private user-read-email';
 // Returned data
 let access_token = '';
 const token_type = '';
+const expires_in = '';
 
 
 
@@ -33,11 +33,14 @@ fetch(endpoint)
   if (access_token) {
     return access_token;
   } else if (responseUrl.match(/access_token=([^&]*)/) &&
-             reponseUrl.match(/expires_in=([^&]*)/)) {
+             reponseUrl.match(/expires_in=([^&]*)/) &&
+             responseUrl.match(/token_type=([^&]*)/)){
     access_token = responseUrl.match(/access_token=([^&]*)/);
     expires_in = reponseUrl.match(/expires_in=([^&]*)/);
+    token_type = responseUrl.match(/token_type=([^&]*)/);
     return access_token;
     return expires_in;
+    return token_type;
   } else {
     return console.log('Request Failed');
   }
