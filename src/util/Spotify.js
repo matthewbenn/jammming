@@ -28,7 +28,7 @@ const expires_in = '';
 
 const Spotify = {
 
-async getAccessToken() {
+const getAccessToken() {
 fetch(endpoint)
   if (access_token) {
     return access_token;
