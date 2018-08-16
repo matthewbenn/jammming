@@ -36,7 +36,7 @@ const Spotify = {
     window.setTimeout(() => access_token = '', expires_in * 1000);
     window.history.pushState('Access Token', null, '/');
   } else {
-    const endpoint = `${authorizeUrl}&${client_id}&${response_type}&${redirect_uri}&${state}&${scope}`
+    const endpoint = `${authorizeUrl}client_id=${client_id}&response_type=${response_type}&redirect_uri=${redirect_uri}&state=${state}&scope=${scope}`
     window.location = endpoint;
   }
     // pull it from the URL

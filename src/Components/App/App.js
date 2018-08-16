@@ -61,7 +61,7 @@ class App extends React.Component {
 //  This updates the state with input from the playlist field
   updatePlaylistName(name) {
     this.setState({playlistName: name});
-    console.log(this.state.playlistName);
+    console.log(this.state.playlistName);/* FOR TESTING- REMOVE*/
   }
 
 // This needs to be reworked and confirmed, suspect its garbage ;)
@@ -73,7 +73,8 @@ class App extends React.Component {
   }
 
   search (term) {
-    console.log(term);
+    console.log(term);/* FOR TESTING- REMOVE*/
+    Spotify.getAccessToken();
   }
 
   render() {
