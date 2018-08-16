@@ -35,7 +35,7 @@ removeTrack() {
           <h3>{this.props.track.name}</h3>
           <p>{this.props.track.artist}</p>
         </div>
-        <a className="Track-action">{this.renderAction}</a>
+        <a className="Track-action">{this.renderAction()}</a>
       </div>
     );
   }

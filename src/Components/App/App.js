@@ -1,3 +1,5 @@
+// Need to remove empty string songs
+
 import React from 'react';
 import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
