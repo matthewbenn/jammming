@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
+import Spotify from '../../util/Spotify';
 
-
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -59,6 +59,7 @@ class App extends Component {
 //  This updates the state with input from the playlist field
   updatePlaylistName(name) {
     this.setState({playlistName: name});
+    console.log(this.state.playlistName);
   }
 
 // This needs to be reworked and confirmed, suspect its garbage ;)
