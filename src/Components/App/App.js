@@ -19,25 +19,25 @@ class App extends React.Component {
 
     this.state = {
 // searchResults should be an Array of Objects
-      searchResults: [
-        {
+      searchResults: [],
+/*        {
           id:'',
           album:'',
           artist:'',
           name:''
         }
-      ],
+  */
         playlistName:'New Playlist',
         // playlistTracks should be an Array of Objects
-        playlistTracks: [
-          {
+        playlistTracks: []
+/*          {
             name:'',
             artist:'',
             album:'',
             id:''
           }
-        ]
-      };
+
+*/      };
     }
 
 // Checks to see if track already exists in playlistTracks, then adds if not.
