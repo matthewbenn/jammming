@@ -74,7 +74,7 @@ class App extends React.Component {
 
   search (term) {
     console.log(term);/* FOR TESTING- REMOVE*/
-    Spotify.getAccessToken();
+    Spotify.search(term);
   }
 
   render() {
