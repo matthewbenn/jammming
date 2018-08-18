@@ -54,7 +54,7 @@ accessToken = this.getAccessToken();
     if (response.ok) {
       return response.json();
     } throw new Error ('Request failed!');
-  }).then(networkError => {
+  }, networkError => {
     console.log(networkError.message);
   }).then(jsonResponse => {
     if (!jsonResponse.tracks) {
