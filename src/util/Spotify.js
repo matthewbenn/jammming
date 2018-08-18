@@ -73,20 +73,3 @@ accessToken = this.getAccessToken();
             }
           };
 export default Spotify;
-/* original first-pass code below
-search(term) {
-  fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`,{
-  headers: {Authorization: `Bearer ${access_token}`}
-}).then(response => {
-  if (response.ok) {
-    return response.json().map(searchResults => {
-      if (searchResults) {
-        return searchResults
-        // how many different ways can this be done?
-      }
-    })
-  }
-})
-
-}
-*/
