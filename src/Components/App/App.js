@@ -75,6 +75,7 @@ class App extends React.Component {
   search (term) {
     console.log(term);/* FOR TESTING- REMOVE*/
     Spotify.search(term);
+    this.setState(tracks => {{searchResults: tracks}});
   }
 
   render() {

@@ -14,21 +14,23 @@ const redirect_uri = 'http://localhost:3000/';
 // Optional - state used for storing cookie
 let state = '';
 const scope = 'user-read-private user-read-email';
-
+let term;
 
 // Returned data
 let access_token = '';
 let token_type = '';
 let expires_in = '';
+let accessToken;
+
+
 
 const Spotify = {
-
- getAccessToken() {
+  getAccessToken() {
   if (access_token) {
     return access_token;
   } else if (responseUrl.match(/access_token=([^&]*)/) &&
              responseUrl.match(/expires_in=([^&]*)/) &&
-             responseUrl.match(/token_type=([^&]*)/)){
+             responseUrl.match(/token_type=([^&]*)/)) {
     access_token = responseUrl.match(/access_token=([^&]*)/);
     expires_in = responseUrl.match(/expires_in=([^&]*)/);
     token_type = responseUrl.match(/token_type=([^&]*)/);
@@ -38,14 +40,51 @@ const Spotify = {
   } else {
     const endpoint = `${authorizeUrl}client_id=${client_id}&response_type=${response_type}&redirect_uri=${redirect_uri}&state=${state}&scope=${scope}`
     window.location = endpoint;
-  }
-    // pull it from the URL
-    // if is in URL
-      // userAccessToken = {urlValue}
-      // return userAccessToken;
-    // else if NOT in URL
-      // redirect the user to the spotify URL
-  }
-};
+  } console.log(access_token);
+},
 
+search(term) {
+accessToken = this.getAccessToken();
+  fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`,{
+  headers: {
+    Authorization: `Bearer ${accessToken}`
+  }
+}).then(response => {
+  if (response.ok) {
+    return response.json();
+  } throw new Error ('Request failed!');
+}).then(networkError => {
+  console.log(networkError.message);
+}).then(jsonResponse => {
+  if (jsonResponse.tracks) {
+    return jsonResponse.tracks.map(track => {
+      return {
+                  id: track.id,
+                  album: track.album.name,
+                  artist: track.artists[0].name,
+                  name:track.name,
+                  uri: track.uri
+                };
+              });
+            }
+          })
+       }
+     };
 export default Spotify;
+/* original first-pass code below
+search(term) {
+  fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`,{
+  headers: {Authorization: `Bearer ${access_token}`}
+}).then(response => {
+  if (response.ok) {
+    return response.json().map(searchResults => {
+      if (searchResults) {
+        return searchResults
+        // how many different ways can this be done?
+      }
+    })
+  }
+})
+
+}
+*/
