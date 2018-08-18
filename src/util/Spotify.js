@@ -40,7 +40,7 @@ const Spotify = {
   } else {
     const endpoint = `${authorizeUrl}client_id=${client_id}&response_type=${response_type}&redirect_uri=${redirect_uri}&state=${state}&scope=${scope}`
     window.location = endpoint;
-  } console.log(access_token);
+  } 
 },
 
 search(term) {
