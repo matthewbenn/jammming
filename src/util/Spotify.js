@@ -36,7 +36,7 @@ const Spotify = {
      access_token = access_token_array[1];
      const expiresIn = Number(expires_in_array[1]);
     return access_token;
-    window.setTimeout(() => access_token = '', expires_in * 1000);
+    window.setTimeout(() => access_token = '', expires_in * 3000);
     window.history.pushState('Access Token', null, '/');
   } else {
     const endpoint = `${authorizeUrl}client_id=${client_id}&response_type=${response_type}&redirect_uri=${redirect_uri}&state=${state}&scope=${scope}`
