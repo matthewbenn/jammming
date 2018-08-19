@@ -46,14 +46,15 @@ class App extends React.Component {
     trackSave.id === track.id)) {
       return;
     } else {
-      this.state.playlistTracks.push(track.id)
-      this.setState({playlistTracks: this.state.playlistTracks});
-    };
+      let newList = this.state.playlistTracks.slice();
+      newList.push(track);
+      this.setState({playlistTracks : newList});
   }
+}
 
 // When a track is clicked to remove this function makes sure it is in the playlistTracks before updating the state
   removeTrack(track) {
-    if (this.state.playlistTracks.find(trackRemove =>
+    if (  this.state.playlistTracks.find(trackRemove =>
   trackRemove.id === track.id)) {
     return;
   } else {
