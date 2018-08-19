@@ -19,13 +19,12 @@ renderAction() {
 }
 
 addTrack(track) {
-//Should this be using this.setState ?
-  this.setState(this.props.onAdd)
+this.props.onAdd(this.props.track)
 }
 
 removeTrack() {
 //Should this be using this.setState ?
-  this.setState(this.props.onRemove)
+  this.props.onRemove(this.props.track)
 }
 
   render() {
@@ -35,7 +34,7 @@ removeTrack() {
           <h3>{this.props.track.name}</h3>
           <p>{this.props.track.artist}</p>
         </div>
-        <a className="Track-action">{this.renderAction()}</a>
+        {this.renderAction()}
       </div>
     );
   }

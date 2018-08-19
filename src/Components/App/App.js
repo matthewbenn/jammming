@@ -47,6 +47,7 @@ class App extends React.Component {
       return;
     } else {
       this.state.playlistTracks.push(track.id)
+      this.setState({playlistTracks: this.state.playlistTracks});
     };
   }
 
@@ -54,9 +55,13 @@ class App extends React.Component {
   removeTrack(track) {
     if (this.state.playlistTracks.find(trackRemove =>
   trackRemove.id === track.id)) {
-  this.state.playlistTracks.pop(track.id);
-    };
-  }
+    return;
+  } else {
+    const toRemove = this.state.playlistTracks.slice(track.id)
+//    this.setState({playlistTracks: this.state.playlistTracks});
+    this.setState({playlistTracks: this.state.playlistTracks.shift(toRemove)})
+  };
+}
 
 //  This updates the state with input from the playlist field
   updatePlaylistName(name) {
