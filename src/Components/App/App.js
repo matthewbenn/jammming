@@ -54,14 +54,14 @@ class App extends React.Component {
 
 // When a track is clicked to remove this function makes sure it is in the playlistTracks before updating the state
   removeTrack(track) {
-    if (  this.state.playlistTracks.find(trackRemove =>
-  trackRemove.id === track.id)) {
-    return;
-  } else {
-    const toRemove = this.state.playlistTracks.slice(track.id)
-//    this.setState({playlistTracks: this.state.playlistTracks});
-    this.setState({playlistTracks: this.state.playlistTracks.shift(toRemove)})
-  };
+    if (!this.state.playlistTracks.find(trackRemove =>
+    trackRemove.id === track.id)) {
+      return;
+    } else {
+      let newList = this.state.playlistTracks.slice();
+      newList.pop(track);
+      this.setState({playlistTracks : newList});
+}
 }
 
 //  This updates the state with input from the playlist field
