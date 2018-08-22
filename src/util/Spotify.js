@@ -27,6 +27,7 @@ let user_id='';
 
 
 const Spotify = {
+
   getAccessToken() {
   if (access_token) {
     return access_token;
@@ -52,12 +53,12 @@ const Spotify = {
 },
 
   search(term) {
-    accessToken = this.getAccessToken();
-    return  fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      }).then(response => {
+    const accessToken = this.getAccessToken();
+    const getTrackEndpoint = `https://api.spotify.com/v1/search?type=track&q=${term}`;
+    const header = { headers: { Authorization: `Bearer ${accessToken}` } };
+
+    return fetch(getTrackEndpoint, header
+      ).then(response => {
         if (response.ok) {
           return response.json();
         } throw new Error ('Request failed!');
@@ -74,18 +75,25 @@ const Spotify = {
                         name:track.name,
                         uri: track.uri
 
-                      }));
-                    }
-                  )
-                },
+          }));
+        }
+      )
+    },
 
-    savePlaylist(playlistName,trackURI) {
-      accessToken = this.getAccessToken();
-      return fetch(`https://api.spotify.com/v1/me`,  {
-          headers: {
-            Authorization: `Bearer ${accessToken}`
+    savePlaylist(playlistName, trackURI) {
+      const accessToken = this.getAccessToken();
+      const getUserEndpoint = `https://api.spotify.com/v1/me`;
+      const playlistEndpoint = `https://api.spotify.com/v1/users/${user_id}/playlists`;
+      const authHeader = { Authorization: `Bearer ${accessToken}`};
+      const createPlaylistHeader = { headers: {
+          method: `Post`,
+          headers: authHeader
+          //BUILDING HERE
           }
-        }).then(response => {
+        };
+
+      return fetch(getUserEndpoint, authHeader
+        ).then(response => {
           if (response.ok) {
             return response.json();
           } throw new Error ('Request failed!');
@@ -94,8 +102,12 @@ const Spotify = {
         }).then(userIdJsonResponse => {
           if (!userIdJsonResponse.id) {
             return;
-          } return userIdJsonResponse.id = user_id;//suspect this is incorrect
+          } user_id = userIdJsonResponse.id;//suspect this is incorrect
         })
+      return fetch(playlistEndpoint,createPlaylistHeader
+
+      )
+
 
 
 
