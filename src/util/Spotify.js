@@ -106,7 +106,7 @@ const Spotify = {
         })
       return fetch(playlistEndpoint,createPlaylistHeader
 
-      )
+      );
 
 
 
