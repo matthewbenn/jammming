@@ -89,7 +89,7 @@ const Spotify = {
       const createPlaylistHeader = {
           headers: authHeader,
           method: `Post`,
-          body: JSON.stringify(name: playlistName)
+          body: JSON.stringify(name: playlistName),
           Content-Type: `application/json`
           //BUILDING HERE
           };
