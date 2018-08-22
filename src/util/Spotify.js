@@ -67,7 +67,8 @@ const Spotify = {
       }).then(searchJsonResponse => {
         if (!searchJsonResponse.tracks) {
           return [];
-        } return searchJsonResponse.tracks.items.map(track => ({
+        }
+        return searchJsonResponse.tracks.items.map(track => ({
 //how are these getting stored exactly? in searchResults?
                         id: track.id,
                         album: track.album.name,
@@ -80,21 +81,21 @@ const Spotify = {
       )
     },
 
-    savePlaylist(playlistName, trackURI) {
+    savePlaylist(playlistName, trackURIs) {
       const accessToken = this.getAccessToken();
       const getUserEndpoint = `https://api.spotify.com/v1/me`;
       const playlistEndpoint = `https://api.spotify.com/v1/users/${user_id}/playlists`;
-      const authHeader = { Authorization: `Bearer ${accessToken}`};
+      const authHeader = { Authorization: `Bearer ${accessToken}`, 'Content-Type': `application/json` };
       let playlist_id,user_id;
       const createPlaylistHeader = {
           headers: authHeader,
           method: `Post`,
-          body: JSON.stringify({name: playlistName}),
-        //Content-Type: `application/json`  <<--- is breaking here
-          //BUILDING HERE
-          };
+          body: {name: playlistName},
 
-      return fetch(getUserEndpoint, {headers: authHeader}
+          //BUILDING HERE
+      };
+
+      fetch(getUserEndpoint, {headers: authHeader}
         ).then(response => {
           if (response.ok) {
             return response.json();
@@ -102,23 +103,23 @@ const Spotify = {
         }, networkError => {
           console.log(networkError.message);
         }).then(userIdJsonResponse => {
-          if (!userIdJsonResponse.id) {
+          if (!userIdJsonResponse.id)
             return;
-          } user_id = userIdJsonResponse.id;//suspect this is incorrect
+          user_id = userIdJsonResponse.id;
         })
 
       return fetch(playlistEndpoint,createPlaylistHeader
-      ).then(response => {
-        if (response.ok) {
-          return response.json();
-        } throw new Error ('Request failed!');
-      }, networkError => {
-        console.log(networkError.message);
-      }).then(playlistIdJsonResponse => {
-        if (!playlistIdJsonResponse.id) {
-          return;
-        } playlist_id = playlistIdJsonResponse.id;//suspect this is incorrect
-      })
+        ).then(response => {
+          if (response.ok) {
+            return response.json();
+          } throw new Error ('Request failed!');
+        }, networkError => {
+          console.log(networkError.message);
+        }).then(playlistIdJsonResponse => {
+          if (!playlistIdJsonResponse.id)
+            return;
+          playlist_id = playlistIdJsonResponse.id;
+        })
 
       return fetch()
 
