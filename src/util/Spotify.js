@@ -85,14 +85,16 @@ const Spotify = {
       const getUserEndpoint = `https://api.spotify.com/v1/me`;
       const playlistEndpoint = `https://api.spotify.com/v1/users/${user_id}/playlists`;
       const authHeader = { Authorization: `Bearer ${accessToken}`};
-      const createPlaylistHeader = { headers: {
+      let playlist_id,user_id;
+      const createPlaylistHeader = {
+          headers: authHeader,
           method: `Post`,
-          headers: authHeader
+          body: JSON.stringify(name: playlistName)
+          Content-Type: `application/json`
           //BUILDING HERE
-          }
-        };
+          };
 
-      return fetch(getUserEndpoint, authHeader
+      return fetch(getUserEndpoint, {headers: authHeader}
         ).then(response => {
           if (response.ok) {
             return response.json();
@@ -104,9 +106,21 @@ const Spotify = {
             return;
           } user_id = userIdJsonResponse.id;//suspect this is incorrect
         })
-      return fetch(playlistEndpoint,createPlaylistHeader
 
-      );
+      return fetch(playlistEndpoint,createPlaylistHeader
+      ).then(response => {
+        if (response.ok) {
+          return response.json();
+        } throw new Error ('Request failed!');
+      }, networkError => {
+        console.log(networkError.message);
+      }).then(playlistIdJsonResponse => {
+        if (!playlistIdJsonResponse.id) {
+          return;
+        } playlist_id = playlistIdJsonResponse.id;//suspect this is incorrect
+      })
+
+      return fetch()
 
 
 
