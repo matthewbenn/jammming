@@ -20,8 +20,8 @@ let term;
 let access_token = '';
 let token_type = '';
 let expires_in = '';
-let accessToken;
-let user_id='';
+let playlist_id,user_id;
+
 //can these also be represented with out the empty string? "let user_id;"
 
 
@@ -85,30 +85,33 @@ const Spotify = {
       const accessToken = this.getAccessToken();
       const getUserEndpoint = `https://api.spotify.com/v1/me`;
       const playlistEndpoint = `https://api.spotify.com/v1/users/${user_id}/playlists`;
-      const authHeader = { Authorization: `Bearer ${accessToken}`, 'Content-Type': `application/json` };
-      let playlist_id,user_id;
+      const authHeader = { headers: {Authorization: `Bearer ${accessToken}`, 'Content-Type': `application/json` }};
       const createPlaylistHeader = {
-          headers: authHeader,
+          authHeader,
           method: `Post`,
-          body: {name: playlistName},
-
+          body: {name: playlistName}
           //BUILDING HERE
       };
 
-      fetch(getUserEndpoint, {headers: authHeader}
-        ).then(response => {
+
+      fetch(getUserEndpoint, authHeader
+      ).then(response => {
           if (response.ok) {
             return response.json();
           } throw new Error ('Request failed!');
         }, networkError => {
           console.log(networkError.message);
         }).then(userIdJsonResponse => {
-          if (!userIdJsonResponse.id)
-            return;
-          user_id = userIdJsonResponse.id;
+         if (userIdJsonResponse.id)
+            console.log(arguments);
+            console.log(`response.id is ${userIdJsonResponse.id}`)
+            user_id = userIdJsonResponse.id;
+            console.log(`userID is ${user_id}`);
+
         })
 
-      return fetch(playlistEndpoint,createPlaylistHeader
+
+      fetch(playlistEndpoint,createPlaylistHeader
         ).then(response => {
           if (response.ok) {
             return response.json();
@@ -121,7 +124,7 @@ const Spotify = {
           playlist_id = playlistIdJsonResponse.id;
         })
 
-      return fetch()
+  //    return fetch()
 
 
 
