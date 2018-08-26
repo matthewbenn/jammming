@@ -60,7 +60,6 @@ class App extends React.Component {
     } else {
       let newList = this.state.playlistTracks.filter(trackRemove =>
       trackRemove.id != track.id);
-    //  newList.pop(track.id);
       this.setState({playlistTracks : newList});
 }
 }
