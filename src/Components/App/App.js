@@ -58,8 +58,9 @@ class App extends React.Component {
     trackRemove.id === track.id)) {
       return;
     } else {
-      let newList = this.state.playlistTracks.slice();
-      newList.pop(track);
+      let newList = this.state.playlistTracks.filter(trackRemove =>
+      trackRemove.id != track.id);
+    //  newList.pop(track.id);
       this.setState({playlistTracks : newList});
 }
 }
