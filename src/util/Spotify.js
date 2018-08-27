@@ -83,6 +83,7 @@ const Spotify = {
 
 
     savePlaylist(playlistName, trackURIs) {
+      if (!playlistName || !trackURIs) return;
       const accessToken = this.getAccessToken();
 //    const getUserEndpoint = ;
 //    const playlistEndpoint = ;
@@ -98,12 +99,12 @@ const Spotify = {
         body: {uris:trackURIs}
       }
 
-console.log(arguments);
+      let user_id,playlist_id;
 
   return fetch(`https://api.spotify.com/v1/me`, {headers: authHeader}
       ).then(response => {
-          if (response.ok) {
-             response.json();
+        if (response.ok) {
+           response.json();
           } throw new Error ('Request failed!');
         }, networkError => {
           console.log(networkError.message);
@@ -121,13 +122,10 @@ console.log(arguments);
               }, networkError => {
                 console.log(networkError.message);
               }).then(playlistIdJsonResponse => {
-                if (!playlistIdJsonResponse.id)
-                  return;
+                if (playlistIdJsonResponse.id)
                   playlist_id = playlistIdJsonResponse.id;
-
-              }).then(
-                fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, popPlaylistHeader)
-              )
+                  return fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, popPlaylistHeader)
+              })
         })
 
 
