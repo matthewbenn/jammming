@@ -13,14 +13,15 @@ const response_type = 'token';
 const redirect_uri = 'http://localhost:3000/';
 // Optional - state used for storing cookie
 let state = '';
-const scope = 'user-read-private user-read-email';
+const scope = 'user-read-private user-read-email, playlist-modify-private';
 let term;
 
 // Returned data
 let access_token = '';
 let token_type = '';
 let expires_in = '';
-let playlist_id,user_id;
+let user_id;
+let playlist_id;
 
 //can these also be represented with out the empty string? "let user_id;"
 
@@ -37,7 +38,6 @@ const Spotify = {
     let access_token_array = responseUrl.match(/access_token=([^&]*)/);
     let expires_in_array = responseUrl.match(/expires_in=([^&]*)/);
 
-  // NEW - checking for valid expires_in in return data -REMOVE
     console.log(access_token_array, expires_in);
     access_token = access_token_array[1];
     const expiresIn = Number(expires_in_array[1]);
@@ -81,52 +81,54 @@ const Spotify = {
       )
     },
 
+
     savePlaylist(playlistName, trackURIs) {
       const accessToken = this.getAccessToken();
-      const getUserEndpoint = `https://api.spotify.com/v1/me`;
-      const playlistEndpoint = `https://api.spotify.com/v1/users/${user_id}/playlists`;
-      const authHeader = { headers: {Authorization: `Bearer ${accessToken}`, 'Content-Type': `application/json` }};
+//    const getUserEndpoint = ;
+//    const playlistEndpoint = ;
+      const authHeader = {Authorization: `Bearer ${accessToken}`, 'Content-Type': `application/json` };
       const createPlaylistHeader = {
-          authHeader,
+          headers: authHeader,
           method: `Post`,
           body: {name: playlistName}
-          //BUILDING HERE
       };
+      const popPlaylistHeader = {
+        headers: authHeader,
+        method: `Post`,
+        body: {uris:trackURIs}
+      }
 
+console.log(arguments);
 
-      fetch(getUserEndpoint, authHeader
+  return fetch(`https://api.spotify.com/v1/me`, {headers: authHeader}
       ).then(response => {
           if (response.ok) {
-            return response.json();
+             response.json();
           } throw new Error ('Request failed!');
         }, networkError => {
           console.log(networkError.message);
         }).then(userIdJsonResponse => {
          if (userIdJsonResponse.id)
-            console.log(arguments);
             console.log(`response.id is ${userIdJsonResponse.id}`)
             user_id = userIdJsonResponse.id;
             console.log(`userID is ${user_id}`);
 
+          return fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, createPlaylistHeader
+              ).then(response => {
+                if (response.ok) {
+                  return response.json();
+                } throw new Error ('Request failed!');
+              }, networkError => {
+                console.log(networkError.message);
+              }).then(playlistIdJsonResponse => {
+                if (!playlistIdJsonResponse.id)
+                  return;
+                  playlist_id = playlistIdJsonResponse.id;
+
+              }).then(
+                fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, popPlaylistHeader)
+              )
         })
-
-
-      fetch(playlistEndpoint,createPlaylistHeader
-        ).then(response => {
-          if (response.ok) {
-            return response.json();
-          } throw new Error ('Request failed!');
-        }, networkError => {
-          console.log(networkError.message);
-        }).then(playlistIdJsonResponse => {
-          if (!playlistIdJsonResponse.id)
-            return;
-          playlist_id = playlistIdJsonResponse.id;
-        })
-
-  //    return fetch()
-
-
 
 
     }
