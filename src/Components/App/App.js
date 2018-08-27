@@ -59,7 +59,7 @@ class App extends React.Component {
       return;
     } else {
       let newList = this.state.playlistTracks.filter(trackRemove =>
-      trackRemove.id != track.id);
+      trackRemove.id !== track.id);
       this.setState({playlistTracks : newList});
 }
 }
