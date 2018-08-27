@@ -1,9 +1,3 @@
-//var request = require('request');
-//var cors = require('cors');
-//var querystring = require('querystring');
-//var cookieParser = require('cookie-parser');
-//let usersAccessToken = await getAccessToken();
-
 const authorizeUrl = `https://accounts.spotify.com/authorize?`;
 const responseUrl = window.location.href
 
@@ -23,10 +17,6 @@ let expires_in = '';
 let user_id;
 let playlist_id;
 
-//can these also be represented with out the empty string? "let user_id;"
-
-
-
 const Spotify = {
 
   getAccessToken() {
@@ -45,12 +35,12 @@ const Spotify = {
     window.setTimeout(() => access_token = '', expires_in * 1000);
     window.history.pushState('Access Token', null, '/');
 
-    return access_token;
-  } else {
-    const endpoint = `${authorizeUrl}client_id=${client_id}&response_type=${response_type}&redirect_uri=${redirect_uri}&state=${state}&scope=${scope}`
-    window.location = endpoint;
-  }
-},
+      return access_token;
+    } else {
+      const endpoint = `${authorizeUrl}client_id=${client_id}&response_type=${response_type}&redirect_uri=${redirect_uri}&state=${state}&scope=${scope}`
+      window.location = endpoint;
+    }
+  },
 
   search(term) {
     const accessToken = this.getAccessToken();
@@ -101,32 +91,32 @@ const Spotify = {
 
       let user_id,playlist_id;
 
-  return fetch(`https://api.spotify.com/v1/me`, {headers: authHeader}
-      ).then(response => {
-        if (response.ok) {
-           response.json();
-          } throw new Error ('Request failed!');
-        }, networkError => {
-          console.log(networkError.message);
-        }).then(userIdJsonResponse => {
-         if (userIdJsonResponse.id)
-            console.log(`response.id is ${userIdJsonResponse.id}`)
-            user_id = userIdJsonResponse.id;
-            console.log(`userID is ${user_id}`);
+    return fetch(`https://api.spotify.com/v1/me`, {headers: authHeader}
+        ).then(response => {
+          if (response.ok) {
+             response.json();
+            } throw new Error ('Request failed!');
+          }, networkError => {
+            console.log(networkError.message);
+          }).then(userIdJsonResponse => {
+           if (userIdJsonResponse.id)
+              console.log(`response.id is ${userIdJsonResponse.id}`)
+              user_id = userIdJsonResponse.id;
+              console.log(`userID is ${user_id}`);
 
-          return fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, createPlaylistHeader
-              ).then(response => {
-                if (response.ok) {
-                  return response.json();
-                } throw new Error ('Request failed!');
-              }, networkError => {
-                console.log(networkError.message);
-              }).then(playlistIdJsonResponse => {
-                if (playlistIdJsonResponse.id)
-                  playlist_id = playlistIdJsonResponse.id;
-                  return fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, popPlaylistHeader)
-              })
-        })
+            return fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, createPlaylistHeader
+                ).then(response => {
+                  if (response.ok) {
+                    return response.json();
+                  } throw new Error ('Request failed!');
+                }, networkError => {
+                  console.log(networkError.message);
+                }).then(playlistIdJsonResponse => {
+                  if (playlistIdJsonResponse.id)
+                    playlist_id = playlistIdJsonResponse.id;
+                    return fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, popPlaylistHeader)
+                })
+          })
 
 
     }
