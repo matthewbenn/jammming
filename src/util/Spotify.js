@@ -4,7 +4,7 @@ const responseUrl = window.location.href
 // Data to be sent
 const client_id = 'dd31a42fc3154ed88c65c8a2c3a87c0c';
 const response_type = 'token';
-const redirect_uri = 'http://localhost:3000/';
+const redirect_uri = 'http://log-jammming.surge.sh/';
 // Optional - state used for storing cookie
 let state = '';
 const scope = 'user-read-private user-read-email, playlist-modify-private, playlist-modify-public';
