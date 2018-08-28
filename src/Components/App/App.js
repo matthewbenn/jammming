@@ -67,20 +67,18 @@ class App extends React.Component {
 //  This updates the state with input from the playlist field
   updatePlaylistName(name) {
     this.setState({playlistName: name});
-    console.log(this.state.playlistName);/* FOR TESTING- REMOVE*/
   }
 
 
-// This needs to be reworked and confirmed, suspect its garbage ;)
+// Populating trackURIs and playlistName for sending to Spotify.savePlaylist
   savePlaylist() {
     let playlistName = this.state.playlistName;
     let trackURIs = [];
     this.state.playlistTracks.forEach(track => trackURIs.push(track.uri));
-    console.log('trackURIs --'+trackURIs);
     Spotify.savePlaylist(playlistName, trackURIs);
   }
 
-
+// Sends the search term entered in searchBar to Spotify to retreive search results
   search (term) {
   Spotify.search(term).then(searchResults => {
   this.setState({searchResults: searchResults});
