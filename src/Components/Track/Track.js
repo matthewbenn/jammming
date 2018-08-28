@@ -23,7 +23,6 @@ this.props.onAdd(this.props.track)
 }
 
 removeTrack() {
-//Should this be using this.setState ?
   this.props.onRemove(this.props.track)
 }
 

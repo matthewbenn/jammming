@@ -58,8 +58,8 @@ const Spotify = {
         if (!searchJsonResponse.tracks) {
           return [];
         }
+//      Returns tracks found in the response to the promise on the App/searchResult anonymous function
         return searchJsonResponse.tracks.items.map(track => ({
-//how are these getting stored exactly? in searchResults?
                         id: track.id,
                         album: track.album.name,
                         artist: track.artists[0].name,
