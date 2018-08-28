@@ -7,15 +7,15 @@ const response_type = 'token';
 const redirect_uri = 'http://localhost:3000/';
 // Optional - state used for storing cookie
 let state = '';
-const scope = 'user-read-private user-read-email, playlist-modify-private';
+const scope = 'user-read-private user-read-email, playlist-modify-private, playlist-modify-public';
+// playlist-modify-public was required to successfully create playlist
 let term;
 
 // Returned data
 let access_token = '';
 let token_type = '';
 let expires_in = '';
-let user_id;
-let playlist_id;
+
 
 const Spotify = {
 
@@ -28,7 +28,7 @@ const Spotify = {
     let access_token_array = responseUrl.match(/access_token=([^&]*)/);
     let expires_in_array = responseUrl.match(/expires_in=([^&]*)/);
 
-    console.log(access_token_array, expires_in);
+  //  console.log(access_token_array, expires_in);
     access_token = access_token_array[1];
     const expiresIn = Number(expires_in_array[1]);
 
@@ -73,6 +73,7 @@ const Spotify = {
 
 
     savePlaylist(playlistName, trackURIs) {
+      console.log(playlistName, trackURIs)
       if (!playlistName || !trackURIs) return;
       const accessToken = this.getAccessToken();
 //    const getUserEndpoint = ;
@@ -81,12 +82,12 @@ const Spotify = {
       const createPlaylistHeader = {
           headers: authHeader,
           method: `Post`,
-          body: {name: playlistName}
+          body: JSON.stringify({name: playlistName})
       };
       const popPlaylistHeader = {
         headers: authHeader,
         method: `Post`,
-        body: {uris:trackURIs}
+        body: JSON.stringify({uris: trackURIs})
       }
 
       let user_id,playlist_id;
@@ -94,7 +95,7 @@ const Spotify = {
     return fetch(`https://api.spotify.com/v1/me`, {headers: authHeader}
         ).then(response => {
           if (response.ok) {
-             response.json();
+            return response.json();
             } throw new Error ('Request failed!');
           }, networkError => {
             console.log(networkError.message);
