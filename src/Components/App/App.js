@@ -70,11 +70,18 @@ class App extends React.Component {
     console.log(this.state.playlistName);/* FOR TESTING- REMOVE*/
   }
 
+
 // This needs to be reworked and confirmed, suspect its garbage ;)
-  savePlaylist(playlistName, trackURIs) {
-    console.log(this);
-    Spotify.savePlaylist(playlistName, trackURIs)
+  savePlaylist() {
+    let playlistName = this.state.playlistName;
+    let trackURIs = [];
+    this.state.playlistTracks.forEach(track => trackURIs.push(this.state.playlistTracks.uri));
+
+    console.log('playlistTracks.uri state is-- '+this.state.playlistTracks.uri);
+    console.log('trackURIs --'+trackURIs);
+//    Spotify.savePlaylist(playlistName, trackURIs);
   }
+
 
   search (term) {
   Spotify.search(term).then(searchResults => {
