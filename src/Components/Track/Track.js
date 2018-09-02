@@ -32,6 +32,11 @@ removeTrack() {
         <div className="Track-information">
           <h3>{this.props.track.name}</h3>
           <p>{this.props.track.artist}</p>
+          <div className="Track-audio" >
+            <audio controls>
+              <source src={this.props.track.preview_url} type="audio/mpeg" />
+            </audio>
+          </div>
         </div>
         {this.renderAction()}
       </div>
